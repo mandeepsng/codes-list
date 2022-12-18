@@ -17,6 +17,7 @@ class BlogController extends Controller
     public function index()
     {
         $all = Blog::all();
+        // dd($all);
         return view('admin.blog.list')->with(['all' => $all]);
     }
 
@@ -39,11 +40,11 @@ class BlogController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'number' => 'required',
-            'weight' => 'required',
+            'title' => 'required',
+            'des' => 'required',
         ],[
-        'number.required' => 'Pad number is required',
-        'weight.required' => 'Pad weight is required',
+        'title.required' => 'Title is required',
+        'des.required' => 'Description is required',
         ]);
 
         if ($validator->fails()) {
@@ -55,8 +56,8 @@ class BlogController extends Controller
 
         $blog = Blog::create(
             [
-                'number' => $request->number,
-                'weight' => $request->weight,
+                'title' => $request->title,
+                'des' => $request->des,
             ]);
 
         if($blog){
@@ -75,7 +76,7 @@ class BlogController extends Controller
      */
     public function show(Blog $blog)
     {
-        //
+        return view('admin.blog.show')->with(['blog' => $blog]);
     }
 
     /**
@@ -99,12 +100,13 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
+
         $validator = Validator::make($request->all(), [
-            'number' => 'required',
-            'weight' => 'required',
+            'title' => 'required',
+            'des' => 'required',
         ],[
-            'number.required' => 'Pad number is required',
-            'weight.required' => 'Pad weight is required',
+        'title.required' => 'Title is required',
+        'des.required' => 'Description is required',
         ]);
 
         if ($validator->fails()) {
@@ -114,11 +116,11 @@ class BlogController extends Controller
         }
 
 
-        $blog->number = $request->number;
-        $blog->weight = $request->weight;
+        $blog->title = $request->title;
+        $blog->des = $request->des;
 
         if($blog->save()){
-            return redirect()->route('pad.index')->with('message', 'Pad Updated Successfully!');
+            return redirect()->route('blog.index')->with('message', 'Blog Post Updated Successfully!');
         }
         return redirect()->back()->with('message', 'Some thing went wrong!');
     }
@@ -131,7 +133,7 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog)
     {
-        $pad->delete();
-        return redirect()->back()->with('message', 'Pad deleted successfully!');;
+        $blog->delete();
+        return redirect()->back()->with('message', 'Blog deleted successfully!');;
     }
 }

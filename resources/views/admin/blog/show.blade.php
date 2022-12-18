@@ -13,7 +13,7 @@
   <body>
     <div class="row">
     <h1 style="text-align: center;">Laravel 9 CRUD Tutorial Example - <a href="https://code.yoblogger.com/">Code.yoblogger.com</a>
-        
+    </h1>
     </div>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
@@ -22,7 +22,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-      <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link" href="{{ route('blog.index') }}"> Home </a>
         </li>
         <li class="nav-item">
@@ -36,45 +36,23 @@
 </nav>
 
 
-<div class="container">
-        <h1>Blog List</h1>
-  <div class="row">
-    <div class="col">
-    <table class="table">
-        <thead>
-            <tr>
-            <th class="col">Post Name</th>
-            <th class="col text-start">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($all as $v )
-            <tr>
-            <td>{{ $v->title }}</td>
-            <td>
-              <a class="btn btn-secondary" href="{{ route('blog.show', $v->id) }}" role="button">View</a>
-              <a class="btn btn-primary" href="{{ route('blog.edit', $v->id) }}" role="button">Edit</a>
-              <form method="post" style="float: left; margin-right: 5px;" action="{{route('blog.destroy',$v->id)}}">
-                  @method('delete')
-                  @csrf
-                  <button type="submit" class="btn btn-danger">Delete</button>
-              </form> 
+    <div class="container">
+        <h1>Show Blog</h1>
+        <div class="row">
+            <div class="col">
+            <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input type="text" class="form-control" value="{{ $blog->title }}" readonly>
+            </div>
+            <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" rows="3" readonly> {{ $blog->des }}</textarea>
 
-
-            </td>
-
-
-
-
-            </tr>
-            @empty
-                
-            @endforelse
-
-
-        </tbody>
-        </table>
+        </div>
+        
     </div>
+
+
   </div>
 </div>
 
